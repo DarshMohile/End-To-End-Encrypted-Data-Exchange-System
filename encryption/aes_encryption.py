@@ -9,8 +9,6 @@ def init_AES(input_file_path:Path, aes_key:bytes, aes_iv:bytes, avalanche:bool, 
     # Initialize output file path
     if(avalanche):
         output_file_path_aes = Path("./data/encrypted/access_log_encrypted_avalanche.aes")
-    elif(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
-        output_file_path_aes = Path("./data/encrypted/image.aes")
     else:
         output_file_path_aes = Path("./data/encrypted/access_log_encrypted.aes")
 
@@ -18,8 +16,14 @@ def init_AES(input_file_path:Path, aes_key:bytes, aes_iv:bytes, avalanche:bool, 
     if(mode == 0):
         # Initialize main cipher object
         aes_cipher = AES.new(aes_key, AES.MODE_CBC, aes_iv)
+
+        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+            output_file_path_aes = Path("./data/encrypted/encrypted_image_CBC.jpg")
     else:
-        aes_cipher = AES.new(aes_key, AES.MODE_ECB, aes_iv)
+        aes_cipher = AES.new(aes_key, AES.MODE_ECB)
+
+        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+            output_file_path_aes = Path("./data/encrypted/encrypted_image_ECB.jpg")
 
 
     # Read the input file

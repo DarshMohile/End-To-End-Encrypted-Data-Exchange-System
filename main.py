@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 ip_file_path = Path("./data/source/access_log.log")
+src_img_path = Path("./data/source/cat.jpg")
 
 
 # Initialize AES key, block size(aka iv)
@@ -49,3 +50,9 @@ print(f"AES/> Bit Difference in avalanche VS original file (%): {result_aes['dif
 
 print(f"\nDES/> Bit Difference in avalanche VS original file: {result_des['different_bits']}")
 print(f"DES/> Bit Difference in avalanche VS original file (%): {result_des['difference_percentage']}\n")
+
+
+# Image encryption
+print("\n/> Enryption of Image using ECB and CBC methods")
+aes_output = init_AES(src_img_path, aes_key, aes_iv, avalanche=False, mode=1)
+aes_output = init_AES(src_img_path, aes_key, aes_iv, avalanche=False, mode=0)
