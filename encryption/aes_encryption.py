@@ -4,16 +4,23 @@ from Crypto.Util.Padding import pad
 from pathlib import Path
     
 
-def init_AES(input_file_path:Path, aes_key:bytes, aes_iv:bytes, avalanche:bool) -> Path:
+def init_AES(input_file_path:Path, aes_key:bytes, aes_iv:bytes, avalanche:bool, mode:int) -> Path:
 
     # Initialize output file path
-    if avalanche:
+    if(avalanche):
         output_file_path_aes = Path("./data/encrypted/access_log_encrypted_avalanche.aes")
+    elif(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+        output_file_path_aes = Path("./data/encrypted/image.aes")
     else:
         output_file_path_aes = Path("./data/encrypted/access_log_encrypted.aes")
 
-    # Initialize main cipher object
-    aes_cipher = AES.new(aes_key, AES.MODE_CBC, aes_iv)
+    
+    if(mode == 0):
+        # Initialize main cipher object
+        aes_cipher = AES.new(aes_key, AES.MODE_CBC, aes_iv)
+    else:
+        aes_cipher = AES.new(aes_key, AES.MODE_ECB, aes_iv)
+
 
     # Read the input file
     with open(input_file_path, "rb") as input_file:

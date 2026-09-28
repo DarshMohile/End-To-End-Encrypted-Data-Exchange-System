@@ -6,7 +6,7 @@ from Crypto.Random import get_random_bytes
 from pathlib import Path
 
 
-ip_file_path = Path("./data/access_log.log")
+ip_file_path = Path("./data/source/access_log.log")
 
 
 # Initialize AES key, block size(aka iv)
@@ -27,8 +27,8 @@ print(f"DES/> Key Length: {str(len(des_key) * 8)} bits")          # print length
 
 
 print("\n/> Enryption of NORMAL FILE")
-aes_output = init_AES(ip_file_path, aes_key, aes_iv, avalanche=False)
-des_output = init_DES(ip_file_path, des_key, des_iv, avalanche=False)
+aes_output = init_AES(ip_file_path, aes_key, aes_iv, avalanche=False, mode=0)
+des_output = init_DES(ip_file_path, des_key, des_iv, avalanche=False, mode=0)
 
 
 print("\n/> Generating Avalanche Effect in original file")
@@ -36,8 +36,8 @@ avalanche_file_path = create_avalanche(ip_file_path)
 
 
 print("\n\n/> Enryption of AVALANCHE FILE")
-avalanche_aes_output = init_AES(avalanche_file_path, aes_key, aes_iv, avalanche=True)
-avalanche_des_output = init_DES(avalanche_file_path, des_key, des_iv, avalanche=True)
+avalanche_aes_output = init_AES(avalanche_file_path, aes_key, aes_iv, avalanche=True, mode=0)
+avalanche_des_output = init_DES(avalanche_file_path, des_key, des_iv, avalanche=True, mode=0)
 
 
 print("\n/> Comparing encryption of both files")

@@ -4,16 +4,23 @@ from pathlib import Path
 
 
 
-def init_DES(input_file_path:Path, des_key:bytes, des_iv:bytes, avalanche:bool) -> Path:
+def init_DES(input_file_path:Path, des_key:bytes, des_iv:bytes, avalanche:bool, mode:int) -> Path:
     
     # Initialize output file path
     if avalanche:
         output_file_path_des = Path("./data/encrypted/access_log_encrypted_avalanche.des")
+    elif(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+        output_file_path_des = Path("./data/encrypted/image.des")
     else:
         output_file_path_des = Path("./data/encrypted/access_log_encrypted.des")
 
-    # Initialize main cipher object
-    des_cipher = DES.new(des_key, DES.MODE_CBC, des_iv)
+
+    if(mode == 0):
+        # Initialize main cipher object
+        des_cipher = DES.new(des_key, DES.MODE_CBC, des_iv)
+    else:
+        des_cipher = DES.new(des_key, DES.MODE_ECB, des_iv)
+
 
     # Read the input file
     with open(input_file_path, "rb") as input_file:
