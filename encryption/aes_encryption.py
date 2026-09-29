@@ -17,7 +17,7 @@ def init_AES(input_file_path:Path, aes_key:bytes, aes_iv:bytes, avalanche:bool, 
         # Initialize main cipher object
         aes_cipher = AES.new(aes_key, AES.MODE_CBC, aes_iv)
 
-        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png" or input_file_path.suffix == ".bmp"):
             output_file_path_aes = Path("./data/encrypted/encrypted_image_CBC.jpg")
     else:
         aes_cipher = AES.new(aes_key, AES.MODE_ECB)

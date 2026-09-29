@@ -2,12 +2,15 @@ from encryption.aes_encryption import init_AES
 from encryption.des_encryption import init_DES
 from util.avalanche import create_avalanche
 from util.compare_encryption import compare_enc
+from encryption.aes_image import init_img_AES
+from util.compare_img import compare_imgs
+from util.reduce_color_depth import reduce_depth
 from Crypto.Random import get_random_bytes
 from pathlib import Path
 
 
 ip_file_path = Path("./data/source/access_log.log")
-src_img_path = Path("./data/source/cat.jpg")
+src_img_path = Path("./data/source/cat.bmp")
 
 
 # Initialize AES key, block size(aka iv)
@@ -54,5 +57,10 @@ print(f"DES/> Bit Difference in avalanche VS original file (%): {result_des['dif
 
 # Image encryption
 print("\n/> Enryption of Image using ECB and CBC methods")
-aes_output = init_AES(src_img_path, aes_key, aes_iv, avalanche=False, mode=1)
-aes_output = init_AES(src_img_path, aes_key, aes_iv, avalanche=False, mode=0)
+
+reduced_img = reduce_depth(src_img_path)
+
+ecb_output = init_img_AES(reduced_img, aes_key, aes_iv, mode=1)
+cbc_output = init_img_AES(reduced_img, aes_key, aes_iv, mode=0)
+
+compare_imgs(src_img_path=reduced_img, ecb_img_path=ecb_output, cbc_img_path=cbc_output)

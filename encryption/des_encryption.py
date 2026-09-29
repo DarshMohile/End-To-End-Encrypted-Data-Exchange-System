@@ -17,12 +17,12 @@ def init_DES(input_file_path:Path, des_key:bytes, des_iv:bytes, avalanche:bool, 
         # Initialize main cipher object
         des_cipher = DES.new(des_key, DES.MODE_CBC, des_iv)
 
-        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png" or input_file_path.suffix == ".bmp"):
             output_file_path_des = Path("./data/encrypted/encrypted_image_CBC.des")
     else:
         des_cipher = DES.new(des_key, DES.MODE_ECB)
         
-        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png"):
+        if(input_file_path.suffix == ".jpg" or input_file_path.suffix == ".jpeg" or input_file_path.suffix == ".png" or input_file_path.suffix == ".bmp"):
             output_file_path_des = Path("./data/encrypted/encrypted_image_ECB.des")
 
 
